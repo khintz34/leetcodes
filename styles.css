@@ -1,0 +1,13 @@
+.outside {
+  border: 5px solid red;
+  height: 100px;
+  display: table-cell;
+  /* width: 10000px; */
+}
+
+.floatLeft {
+  float: left;
+  background-color: gray;
+  height: 50px;
+  width: 50px;
+}
