@@ -347,47 +347,6 @@ var merge = function (nums1, m, nums2, n) {
 // merge([1, 0], 1, [2], 1);
 // merge([4, 0, 0, 0, 0, 0], 1, [1, 2, 3, 5, 6], 5);
 
-// var maxProfit = function (prices) {
-//   let min;
-//   let max = 0;
-//   let profit = 0;
-//   for (let i = 0; i < prices.length; i++) {
-//     if (i === 0) {
-//       min = prices[0];
-//     } else if (prices[i] < min) {
-//       min = prices[i];
-//       max = 0;
-//     } else if (prices[i] > max) {
-//       max = prices[i];
-//     }
-//   }
-//   profit = max - min;
-//   if (profit < 0) profit = 0;
-//   console.log("min", min);
-//   console.log("max", max);
-//   console.log("profit:", profit);
-//   return profit;
-// };
-
-// var maxProfit = function (prices) {
-//   let profit = 0;
-//   for (let i = 0; i < prices.length; i++) {
-//     for (let j = i + 1; j < prices.length; j++) {
-//       // console.log(prices[i], prices[j]);
-//       if (prices[j] - prices[i] > profit) {
-//         profit = prices[j] - prices[i];
-//         console.log("setting profit: ", prices[j], prices[i]);
-//       }
-//     }
-//   }
-
-//   // console.log("min", min);
-//   // console.log("max", max);
-//   // console.log("profit:", profit);
-//   return profit;
-// };
-
-//! better
 var maxProfit = function (prices) {
   if (prices == null || prices.length <= 1) return 0;
   let minBuy = prices[0];
@@ -396,9 +355,15 @@ var maxProfit = function (prices) {
     minBuy = Math.min(minBuy, prices[i]);
     profit = Math.max(profit, prices[i] - minBuy);
   }
-  console.log(profit);
   return profit;
 };
+
+// 1) check edge cases like null or length less than 0. if so return 0 profit
+// 2) your first minimum is prices[0] since its the first price you encounter. Your profit starts at 0.
+// 3) loop through each price
+// 4) for each price check to see which is a lower value between the current minimum and the current value
+// 5) set the profit as which ever is larger between the current profit and the current price minus the new minimum
+// 6) return the profit
 
 // maxProfit([7, 1, 5, 3, 6, 4]);
 // maxProfit([933, 87, 162, 749, 357, 250, 469, 484, 182, 9]);
@@ -407,7 +372,7 @@ var isPalindrome = function (s) {
   let newString = s.replace(/[^A-Z0-9]+/gi, "").toLowerCase();
   let reverseString = newString.split("").reverse().join("").toLowerCase();
 
-  return newString == reverseString;
+  return newString === reverseString;
 };
 
 // isPalindrome("A man, a plan, a canal: Panama");
@@ -777,7 +742,7 @@ var reverseVowels = function (s) {
   return s.join("");
 };
 
-reverseVowels("lUtcode");
+// reverseVowels("lUtcode");
 
 // two pointer method answer.
 // 1) create a vowel map to look for all vowels in
@@ -789,4 +754,67 @@ reverseVowels("lUtcode");
 // 7) swap the s[start] and s[end] vowels and then increment/decrement the pointers
 // 8) join array back to string and return
 
-var reverseWords = function (s) {};
+var reverseWords = function (s) {
+  let str = s.split(" ");
+  let output = "";
+  for (let i = str.length - 1; i >= 0; i--)
+    if (str[i]) output += (output ? " " : "") + str[i];
+  return output;
+};
+
+// reverseWords("the sky is blue    ");
+
+// 1) split the string with spaces so each el in the array is a word
+// 2) loop through starting at the end and working to the beginning
+// 3) if str[i] is not space then it will be added to the output
+// 4) if output is empty then dont add a space, otherwise add a space at the beginning of each word
+// 5) return new string
+
+var productExceptSelf = function (nums) {
+  // First, create a prefix array that moves from the left,
+  // gathering the running product of the prefix at each index
+  const prefix = [];
+
+  // Move left in the input array
+  for (let i = 0; i < nums.length; i++) {
+    // If i === 0, start with `1`, since there is no prefix
+    if (i === 0) {
+      prefix[i] = 1;
+    } else {
+      // Otherwise, multiply nums[i-1] times the prefix at position i-1,
+      // and add that to the prefix array at position i
+      console.log(nums[i - 1] * prefix[i - 1]);
+      prefix[i] = nums[i - 1] * prefix[i - 1];
+    }
+  }
+  console.log(prefix);
+
+  // Then, let's create a suffix array
+  const suffix = [];
+
+  // Move right in the input array
+  for (let i = nums.length - 1; i >= 0; i--) {
+    // For the last index, we have no suffix, so just add a 1 to that position
+    if (i === nums.length - 1) {
+      suffix[i] = 1;
+    } else {
+      // Otherwise, we multiply nums[i+1] by the suffix at position i+1
+      // and add that to the suffix array at position i
+      console.log(nums[i + 1] * suffix[i + 1]);
+      suffix[i] = nums[i + 1] * suffix[i + 1];
+    }
+  }
+  console.log(suffix);
+
+  // Finally, our result array should be the products of prefix * suffix for each position
+  const result = [];
+
+  for (let i = 0; i < nums.length; i++) {
+    result[i] = prefix[i] * suffix[i];
+  }
+  console.log(result);
+
+  return result;
+};
+
+// productExceptSelf([1, 2, 3, 4]);
