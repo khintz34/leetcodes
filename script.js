@@ -818,3 +818,49 @@ var productExceptSelf = function (nums) {
 };
 
 // productExceptSelf([1, 2, 3, 4]);
+
+var kthFactor = function (n, k) {
+  if (k === 1) return 1;
+
+  let count = 0;
+
+  for (let i = 0; i <= n; i++) {
+    if (n % i === 0) {
+      count++;
+      console.log("count: ", count);
+      console.log("i: ", i);
+
+      if (count === k) {
+        return i;
+      }
+    }
+  }
+
+  console.log("-1");
+
+  return -1;
+};
+
+// kthFactor(4, 4);
+// 1) if k is one then just return 1 because that will always be the first digit with 1 % n === 0;
+// 2) keep track of how many times we get i % n === 0 using count
+// 3) Loop through each number that is less than or equal to n until count is equal to k. Then return k
+// 4) if we get all the way through without reaching count === k, then return -1 for invalid
+
+var partitionString = function (s) {
+  let str = s[0];
+  let count = 1;
+
+  for (let i = 1; i < s.length; i++) {
+    if (str.includes(s[i])) {
+      count++;
+      str = s[i];
+    } else {
+      str += s[i];
+    }
+  }
+
+  return count;
+};
+
+console.log(partitionString("abcdef"));
