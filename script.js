@@ -863,4 +863,78 @@ var partitionString = function (s) {
   return count;
 };
 
-console.log(partitionString("abcdef"));
+// console.log(partitionString("abcdef"));
+
+var generate = function (numRows) {
+  if (numRows === 1) {
+    return [[1]];
+  }
+
+  // initilize the result array
+  let ret = [];
+
+  for (let i = 0; i < numRows; i++) {
+    // Setup for each new row
+    // We know that each row will have first and last number set to 1
+    ret[i] = [];
+    ret[i][0] = 1;
+    ret[i][i] = 1;
+
+    // Iterate over each position in the row,
+    // and calculate the result for that position using the formula
+    for (let j = 1; j < i; j++) {
+      ret[i][j] = ret[i - 1][j] + ret[i - 1][j - 1];
+    }
+  }
+
+  return ret;
+};
+
+// console.log(generate(2));
+
+var maximumWealth = function (accounts) {
+  let max = 0;
+
+  for (let i = 0; i < accounts.length; i++) {
+    let sum = 0;
+    for (let j = 0; j < accounts[i].length; j++) {
+      sum += accounts[i][j];
+    }
+
+    if (sum > max) {
+      max = sum;
+    }
+  }
+
+  return max;
+};
+
+// 1) initialize a max value to be the base
+// 2) loop through each person, setting the sum to 0
+// 3) loop through each account, adding to the total sum
+// 4) if the total sum is greater than the current max, then set max to sum
+// 5) at the end just return the max
+
+// maximumWealth([
+//   [2, 8, 7],
+//   [7, 1, 3],
+//   [1, 9, 5],
+// ]);
+
+var getConcatenation = function (nums) {
+  return nums.concat(nums);
+};
+
+// 1) just concat two arrays and return
+// getConcatenation([1, 2, 1]);
+
+var buildArray = function (nums) {
+  let arr = [];
+  for (let i = 0; i < nums.length; i++) {
+    arr.push(nums[nums[i]]);
+  }
+  console.log(arr);
+  return arr;
+};
+
+buildArray([5, 0, 1, 2, 3, 4]);
