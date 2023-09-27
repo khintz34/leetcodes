@@ -937,4 +937,25 @@ var buildArray = function (nums) {
   return arr;
 };
 
-buildArray([5, 0, 1, 2, 3, 4]);
+// 1) init an array
+// 2) loop through input array based on length
+// 3) push the value that is in the nums[i] position
+// 4) return array
+// example: [5, 0, 1, 2, 3, 4]
+// - nums[nums[0]] --> nums[5] --> 4
+// - nums[nums[1]] -> nums[0] --> 5
+// - repeat. this only works for a 0 permeated array with values 0 - array.length -1
+
+// buildArray([5, 0, 1, 2, 3, 4]);
+
+var runningSum = function (nums) {
+  let sum = 0;
+  let array = [];
+  nums.map((val) => {
+    sum += val;
+    console.log(sum);
+    array.push(val + sum);
+  });
+};
+
+runningSum([1, 2, 3, 4, 5]);
