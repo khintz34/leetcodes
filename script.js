@@ -958,4 +958,21 @@ var runningSum = function (nums) {
   });
 };
 
-runningSum([1, 2, 3, 4, 5]);
+// runningSum([1, 2, 3, 4, 5]);
+
+//! this isnt done yet. this works byt I dont understand. need to learn more about reduce
+
+var findLeastNumOfUniqueInts = function (arr, k) {
+  arr.sort();
+  const counts = arr.reduce((acc, curr) => {
+    acc[curr] = acc[curr] ? acc[curr] + 1 : 1;
+    return acc;
+  }, {});
+
+  console.log(counts);
+
+  arr.sort((a, b) => counts[a] - counts[b]);
+  return new Set(arr.slice(k)).size;
+};
+
+findLeastNumOfUniqueInts([4, 3, 1, 1, 3, 3, 2], 3);
